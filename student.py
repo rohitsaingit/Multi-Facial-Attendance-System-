@@ -185,9 +185,66 @@ class Student:
 
         #Student Search
         student_search_frame=LabelFrame(right_frame,bd=2,bg="white", relief=RIDGE,text="Student Search", font=("times new roman",12,"bold"))
-        student_search_frame.place(x=10,y=135,width=595,height=80)
+        student_search_frame.place(x=10,y=135,width=595,height=100)
 
+        student_search_label=Label(student_search_frame,text="Search Student By :",font=("times new roman",13,"bold") ,bg="green", fg="white")
+        student_search_label.grid(row=0,column=0,padx=10,pady=5,sticky=W)
 
+        student_search_combo=ttk.Combobox(student_search_frame,font=("times new roman",12,"bold"), state="readonly")
+        student_search_combo["values"]=("Select","Student Name","Roll No.")
+        student_search_combo.current(0)
+        student_search_combo.grid(row=0,column=1,padx=2,pady=10,sticky=W)
+
+        search_entry=ttk.Entry(student_search_frame,width=20,font=("times new roman", 13,"bold"))
+        search_entry.grid(row=0,column=2,padx=10,pady=5,sticky=W)
+
+        # Student search Button
+        student_search_button_frame=Frame(right_frame,bd=2,relief=RIDGE,bg="white")
+        student_search_button_frame.place(x=180,y=200,width=280,height=35)
+
+        search_btn=Button(student_search_button_frame,text="Search",width=13,font=("times new roman",13,"bold"),bg="blue",fg="white")
+        search_btn.grid(row=0,column=0)
+
+        showAll_btn=Button(student_search_button_frame,text="Show All",width=13,font=("times new roman",13,"bold"),bg="blue",fg="white")
+        showAll_btn.grid(row=0,column=1,padx=4)
+
+        # ================Student Table Frame================
+        student_table_frame=LabelFrame(right_frame,bd=2,bg="white", relief=RIDGE)
+        student_table_frame.place(x=10,y=240,width=595,height=240)
+        
+        scroll_x=ttk.Scrollbar(student_table_frame,orient=HORIZONTAL)
+        scroll_y=ttk.Scrollbar(student_table_frame,orient=VERTICAL)
+
+        self.student_table=ttk.Treeview(student_table_frame, columns=("name","rollno","dep","sec","course","sem","teacher","mobile","photo"),xscrollcommand=scroll_x.set,yscrollcommand=scroll_y.set)
+
+        scroll_x.pack(side=BOTTOM,fill=X)
+        scroll_y.pack(side=RIGHT,fill=Y)
+        scroll_x.config(command=self.student_table.xview)
+        scroll_y.config(command=self.student_table.yview)
+
+        self.student_table.heading("name", text="Student Name")
+        self.student_table.heading("rollno", text="Roll Number")
+        self.student_table.heading("dep", text="Department")
+        self.student_table.heading("sec", text="Section")
+        self.student_table.heading("course", text="Course")
+        self.student_table.heading("sem", text="Semester")
+        self.student_table.heading("mobile", text="Phone Number")
+        self.student_table.heading("teacher", text="Teacher")
+        self.student_table.heading("photo", text="Photo")
+
+        self.student_table["show"]="headings"
+        self.student_table.column("name",width=100)
+        self.student_table.column("dep",width=100)
+        self.student_table.column("rollno",width=100)
+        self.student_table.column("sec",width=100)
+        self.student_table.column("course",width=100)
+        self.student_table.column("sem",width=100)
+        self.student_table.column("mobile",width=100)
+        self.student_table.column("teacher",width=100)
+        self.student_table.column("photo",width=100)
+
+        self.student_table.pack(fill=BOTH,expand=1)
+        
 
 if __name__ == "__main__":
     root=Tk()
