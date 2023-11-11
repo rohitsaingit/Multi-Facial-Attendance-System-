@@ -2,6 +2,9 @@ from tkinter import*
 from tkinter import ttk
 from PIL import Image,ImageTk
 from student import Student
+import tkinter
+from time import strftime
+from datetime import datetime
 
 class Face_Recognition_system:
     def __init__(self,root):
@@ -30,6 +33,17 @@ class Face_Recognition_system:
         #Title of the Web Page
         title_label=Label(bg_img,text="FACE RECOGNITION ATTENDANCE SYSTEM", font=("times new roman", 35,"bold"), bg="white",fg="red")
         title_label.place(x=0,y=0,width=1530,height=45)
+
+        #=================Time==========
+        def time():
+            string= strftime('%d-%m-%Y %I:%M:%S %p')
+            
+            label.config(text= string)
+            label.after(1000,time)
+
+        label=Label(title_label, font=('times new roman',14,'bold'),background='white',foreground='blue')
+        label.place(x=0,y=2,width=200,height=50)
+        time()
 
         # Sudent button
         studentButton = Image.open('Images/student_detail.png')
@@ -108,19 +122,25 @@ class Face_Recognition_system:
         exitButton = exitButton.resize((220, 220), Image.LANCZOS)
         self.photoexitButton = ImageTk.PhotoImage(exitButton)
 
-        b1 = Button(root, image=self.photoexitButton, cursor="hand2")
+        b1 = Button(root, image=self.photoexitButton, cursor="hand2",command=self.exit)
         b1.place(x=1000, y=450, width=200, height=200)
   
 
-        b1_label = Button(bg_img, text="Exit", cursor="hand2", font=("times new roman", 15, "bold"), bg="blue", fg="white")
+        b1_label = Button(bg_img, text="Exit", cursor="hand2",command=self.exit, font=("times new roman", 15, "bold"), bg="blue", fg="white")
         b1_label.place(x=1000, y=520, width=200, height=40)
 
-        # Function button
+    #================== Function button=================
     def student_detail(self):
         self.new_window=Toplevel(self.root)
         self.app=Student(self.new_window)
 
-
+    
+    def exit(self):
+        self.exit=tkinter.messagebox.askyesno("Face Recognition", "Are you sure exit this project",parent=self.root)
+        if self.exit >0:
+           self.root.destroy()
+        else: 
+            return
 
 if __name__ == "__main__":
     root=Tk()
