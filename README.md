@@ -10,3 +10,9 @@ now  Install Project Dependencies according to your project requirement :- pip i
 Deactivate the Virtual Environment
 To exit the virtual environment when you're done working on your project, you can simply run:  deactivate
 
+# ==============TO INSTALL MYSQL CONNECTOR================
+     pip install mysql 
+     pip install mysql-connector
+           or
+     pip install mysql-connector-python
+
