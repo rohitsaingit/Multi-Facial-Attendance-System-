@@ -1,7 +1,9 @@
 from tkinter import*
 from tkinter import ttk
 from PIL import Image,ImageTk
+import os
 from student import Student
+from train import Train
 
 class Face_Recognition_system:
     def __init__(self,root):
@@ -60,11 +62,11 @@ class Face_Recognition_system:
         trainDataButton = trainDataButton.resize((220, 220), Image.LANCZOS)
         self.phototrainDataButton = ImageTk.PhotoImage(trainDataButton)
 
-        b1 = Button(root, image=self.phototrainDataButton, cursor="hand2")
+        b1 = Button(root, image=self.phototrainDataButton, cursor="hand2", command=self.train_data)
         b1.place(x=700, y=200, width=200, height=200)
   
 
-        b1_label = Button(bg_img, text="Train Data", cursor="hand2", font=("times new roman", 15, "bold"), bg="blue", fg="white")
+        b1_label = Button(bg_img, text="Train Data", cursor="hand2", command=self.train_data, font=("times new roman", 15, "bold"), bg="blue", fg="white")
         b1_label.place(x=700, y=270, width=200, height=40)
 
         # Attendance button
@@ -84,11 +86,11 @@ class Face_Recognition_system:
         photoButton = photoButton.resize((220, 220), Image.LANCZOS)
         self.photophotoButton = ImageTk.PhotoImage(photoButton)
 
-        b1 = Button(root, image=self.photophotoButton, cursor="hand2")
+        b1 = Button(root, image=self.photophotoButton, cursor="hand2", command=self.open_img)
         b1.place(x=100, y=450, width=200, height=200)
   
 
-        b1_label = Button(bg_img, text="Photos", cursor="hand2", font=("times new roman", 15, "bold"), bg="blue", fg="white")
+        b1_label = Button(bg_img, text="Photos", cursor="hand2", command=self.open_img, font=("times new roman", 15, "bold"), bg="blue", fg="white")
         b1_label.place(x=100, y=520, width=200, height=40)
 
         # Project Report button
@@ -115,10 +117,20 @@ class Face_Recognition_system:
         b1_label = Button(bg_img, text="Exit", cursor="hand2", font=("times new roman", 15, "bold"), bg="blue", fg="white")
         b1_label.place(x=1000, y=520, width=200, height=40)
 
-        # Function button
+
+    def open_img(self):
+        os.startfile("data")
+
+
+
+    # Function button
     def student_detail(self):
         self.new_window=Toplevel(self.root)
         self.app=Student(self.new_window)
+
+    def train_data(self):
+        self.new_window=Toplevel(self.root)
+        self.app=Train(self.new_window)
 
 
 
