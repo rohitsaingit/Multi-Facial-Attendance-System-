@@ -62,3 +62,6 @@ Verify Connection: Once connected, verify that you can access the database and p
 # -------------------------------------------------------------------------------------------------------------
 
 
+pip install numpy
+
+pip install opencv_contrib_python
