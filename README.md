@@ -10,3 +10,6 @@ now  Install Project Dependencies according to your project requirement :- pip i
 Deactivate the Virtual Environment
 To exit the virtual environment when you're done working on your project, you can simply run:  deactivate
 
+pip install numpy
+
+pip install opencv_contrib_python
