@@ -7,6 +7,7 @@ import tkinter
 from time import strftime
 from datetime import datetime
 from train import Train
+from face_recognition import Face_Recognition
 
 class Face_Recognition_system:
     def __init__(self,root):
@@ -64,11 +65,11 @@ class Face_Recognition_system:
         faceDetector = faceDetector.resize((220, 220), Image.LANCZOS)
         self.photofaceDetector = ImageTk.PhotoImage(faceDetector)
 
-        b1 = Button(root, image=self.photofaceDetector, cursor="hand2")
+        b1 = Button(root, image=self.photofaceDetector, cursor="hand2", command=self.face_data)
         b1.place(x=400, y=200, width=200, height=200)
   
 
-        b1_label = Button(bg_img, text="Face Detector", cursor="hand2", font=("times new roman", 15, "bold"), bg="blue", fg="white")
+        b1_label = Button(bg_img, text="Face Detector", cursor="hand2", command=self.face_data, font=("times new roman", 15, "bold"), bg="blue", fg="white")
         b1_label.place(x=400, y=270, width=200, height=40)
 
         # Train Data  button
@@ -153,6 +154,11 @@ class Face_Recognition_system:
     def train_data(self):
         self.new_window=Toplevel(self.root)
         self.app=Train(self.new_window)
+
+    def face_data(self):
+        self.new_window=Toplevel(self.root)
+        self.app=Face_Recognition(self.new_window)
+    
 
 
 
