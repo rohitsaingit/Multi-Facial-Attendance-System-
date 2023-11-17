@@ -86,7 +86,7 @@ class Face_Recognition:
             return img
 
         faceCascade=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
-        clf=cv2.face.LBPHFaceRecognizer_create()
+        clf = cv2.face.LBPHFaceRecognizer_create()
         clf.read("classifier.xml")
 
         video_cap=cv2.VideoCapture(0)  # 0 -> System Camera & 1 -> Other Camera

@@ -275,7 +275,7 @@ class Student:
             messagebox.showerror("Error", "All field are required",parent=self.root)
         else:
             try:
-                conn = mysql.connector.connect(host="localhost",username="root",password="9896066470King@",database="face_recognizer")
+                conn = mysql.connector.connect(host="localhost",username="root",password="Rohit@9401",database="face_recognizer")
                 my_cursor = conn.cursor()
                 my_cursor.execute("insert into student values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
                     self.var_rollno.get(),
@@ -290,7 +290,7 @@ class Student:
                     self.var_teacher.get()
                 ))
                 conn.commit()
-                self.fetch_data
+                self.fetch_data()
                 conn.close()
                 messagebox.showinfo("Success", "Details has been added Successfully",parent=self.root)
             except Exception as es:
@@ -298,17 +298,17 @@ class Student:
 
     # ==============Fetch From Database=======================
     def fetch_data(self):
-        conn = mysql.connector.connect(host="localhost",username="root",password="9896066470King@",database="face_recognizer")
+        conn = mysql.connector.connect(host="localhost", username="root", password="Rohit@9401", database="face_recognizer")
         my_cursor = conn.cursor()
         my_cursor.execute("select * from student")
         data = my_cursor.fetchall()
 
         if len(data) != 0:
-            self.student_table.delete(*self.student_table.get_children())
-            for i in data:
-                self.student_table.insert("",END,values=i)
-                conn.commit()
-            conn.close()
+             self.student_table.delete(*self.student_table.get_children())
+             for i in data:
+                  self.student_table.insert("", END, values=i)
+             conn.commit()  
+        conn.close()
 
     # ==============Get Cursor=======================
     def get_cursor(self,event=""):
@@ -335,7 +335,7 @@ class Student:
             try:
                 Update=messagebox.askyesno("Update","Do you want to update this student detials",parent=self.root)
                 if Update>0:
-                    conn = mysql.connector.connect(host="localhost",username="root",password="9896066470King@",database="face_recognizer")
+                    conn = mysql.connector.connect(host="localhost",username="root",password="Rohit@9401",database="face_recognizer")
                     my_cursor = conn.cursor()
                     my_cursor.execute("update student set Name=%s,Dep=%s,Sem=%s,Sec=%s,Session=%s,Mobile=%s,Gender=%s,Course=%s,Teacher=%s where Roll_No=%s",(
                         self.var_std_name.get(),
@@ -368,7 +368,7 @@ class Student:
             try:
                 delete=messagebox.askyesno("Student Delete Page","Do you want to delete this student ?",parent=self.root)
                 if delete>0:
-                    conn = mysql.connector.connect(host="localhost",username="root",password="9896066470King@",database="face_recognizer")
+                    conn = mysql.connector.connect(host="localhost",username="root",password="Rohit@9401",database="face_recognizer")
                     my_cursor = conn.cursor()
                     sql="delete from student where Roll_No=%s"
                     val=(self.var_rollno.get(),)
@@ -402,7 +402,7 @@ class Student:
             messagebox.showerror("Error", "All field are required",parent=self.root)
         else:
             try:
-                conn = mysql.connector.connect(host="localhost",username="root",password="9896066470King@",database="face_recognizer")
+                conn = mysql.connector.connect(host="localhost",username="root",password="Rohit@9401",database="face_recognizer")
                 my_cursor = conn.cursor()
                 my_cursor.execute("select * from student")
                 myresult=my_cursor.fetchall()
