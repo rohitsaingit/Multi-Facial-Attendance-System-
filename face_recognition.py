@@ -15,11 +15,11 @@ class Face_Recognition:
 
 
     # ================ Label =======================
-        title_label=Label(self.root,text="Face Recognition", font=("times new roman", 35,"bold"), bg="white",fg="red")
+        title_label=Label(self.root,text="Face Recognition", font=("times new roman", 35,"bold"), bg="blue",fg="white")
         title_label.place(x=0,y=0,width=1530,height=45)
 
     # ================ Left Image =======================
-        img_top = Image.open('Images/train_data.png')
+        img_top = Image.open('Images/face_detection_left.png')
         img_top = img_top.resize((650, 700), Image.LANCZOS)
         self.photoimg_top=ImageTk.PhotoImage(img_top)
 
@@ -27,17 +27,18 @@ class Face_Recognition:
         f_1b2.place(x=0,y=55,width=650,height=700)
 
     # ================ Right Image =======================
-        img_bottom = Image.open('Images/student_inclass.jpg')
+        img_bottom = Image.open('Images/face_detector_right.jpg')
         img_bottom = img_bottom.resize((950, 700), Image.LANCZOS)
         self.photoimg_bottom=ImageTk.PhotoImage(img_bottom)
 
         f_1b2=Label(self.root,image=self.photoimg_bottom)
-        f_1b2.place(x=650,y=55,width=950,height=700 )
+        f_1b2.place(x=650,y=55,width=800,height=700 )
 
     # ================ Button =======================
         b1_label = Button(f_1b2, text="Face Recogition", command=self.face_recog,cursor="hand2", font=("times new roman", 18, "bold"), bg="blue", fg="white")
-        b1_label.place(x=365, y=620, width=200, height=40)
-
+        b1_label.place(x=310, y=510, width=200, height=40)
+    
+    
 
     # ================ Face Recognition =======================
     def face_recog(self):
@@ -52,7 +53,7 @@ class Face_Recognition:
                 id,predict=clf.predict(gray_image[y:y+h,x:x+w])
                 confidence=int((100*(1-predict/300)))
 
-                conn = mysql.connector.connect(host="localhost",username="root",password="9896066470King@",database="face_recognizer")
+                conn = mysql.connector.connect(host="localhost",username="root",password="Rohit@9401",database="face_recognizer")
                 my_cursor = conn.cursor()
 
                # n - Name, r - Roll_No, d - Department
@@ -86,7 +87,7 @@ class Face_Recognition:
             return img
 
         faceCascade=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
-        clf = cv2.face.LBPHFaceRecognizer_create()
+        clf=cv2.face.LBPHFaceRecognizer_create()
         clf.read("classifier.xml")
 
         video_cap=cv2.VideoCapture(0)  # 0 -> System Camera & 1 -> Other Camera
@@ -100,7 +101,9 @@ class Face_Recognition:
                 break
         video_cap.release()
         cv2.destroyAllWindows()
+    
 
+    
 
 if __name__ == "__main__":
     root=Tk()

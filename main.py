@@ -4,9 +4,13 @@ from PIL import Image,ImageTk
 import os
 from student import Student
 import tkinter
+import webbrowser
+import cv2
+import numpy as np
+from tkinter import messagebox
 from time import strftime
 from datetime import datetime
-from train import Train
+
 from face_recognition import Face_Recognition
 
 class Face_Recognition_system:
@@ -27,7 +31,7 @@ class Face_Recognition_system:
         text_label2.place(x=250, y=75, width=900, height=50)
         
         #Background Image
-        img_back=Image.open('Images/Background_FR.jpg')
+        img_back=Image.open('Images/cool-background.png')
         img_back=img_back.resize((1530,710),Image.LANCZOS)
         self.photoimg_back=ImageTk.PhotoImage(img_back)
         bg_img=Label(self.root ,image=self.photoimg_back)
@@ -77,11 +81,11 @@ class Face_Recognition_system:
         trainDataButton = trainDataButton.resize((220, 220), Image.LANCZOS)
         self.phototrainDataButton = ImageTk.PhotoImage(trainDataButton)
 
-        b1 = Button(root, image=self.phototrainDataButton, cursor="hand2", command=self.train_data)
+        b1 = Button(root, image=self.phototrainDataButton, cursor="hand2", command=self.train_classifier)
         b1.place(x=700, y=200, width=200, height=200)
   
 
-        b1_label = Button(bg_img, text="Train Data", cursor="hand2", command=self.train_data, font=("times new roman", 15, "bold"), bg="blue", fg="white")
+        b1_label = Button(bg_img, text="Train Data", cursor="hand2", command=self.train_classifier, font=("times new roman", 15, "bold"), bg="blue", fg="white")
         b1_label.place(x=700, y=270, width=200, height=40)
 
         # Attendance button
@@ -113,11 +117,11 @@ class Face_Recognition_system:
         reportButton = reportButton.resize((220, 220), Image.LANCZOS)
         self.photoreportButton = ImageTk.PhotoImage(reportButton)
 
-        b1 = Button(root, image=self.photoreportButton, cursor="hand2")
+        b1 = Button(root, image=self.photoreportButton,command=self.open_pdf, cursor="hand2")
         b1.place(x=400, y=450, width=200, height=200)
   
 
-        b1_label = Button(bg_img, text="Project Report", cursor="hand2", font=("times new roman", 15, "bold"), bg="blue", fg="white")
+        b1_label = Button(bg_img, text="Project Report",command=self.open_pdf, cursor="hand2", font=("times new roman", 15, "bold"), bg="blue", fg="white")
         b1_label.place(x=400, y=520, width=200, height=40)
 
         # Exit button
@@ -151,14 +155,46 @@ class Face_Recognition_system:
            self.root.destroy()
         else: 
             return
-    def train_data(self):
-        self.new_window=Toplevel(self.root)
-        self.app=Train(self.new_window)
+        
+    # ================ Train the classifier =======================
+    def train_classifier(self):
+        data_dir=("data")
+        path=[os.path.join(data_dir,file) for file in os.listdir(data_dir)]
+
+        faces=[]
+        ids=[]
+
+        for image in path:
+            img=Image.open(image).convert('L')      # Gray Scale Conversion
+            imageNp=np.array(img,'uint8')           # uint8 - Use for Database   (Data-type)
+            id=int(os.path.split(image)[1].split('.')[1])
+
+            faces.append(imageNp)
+            ids.append(id)
+            cv2.imshow("Training",imageNp)
+            cv2.waitKey(1)==13
+        ids=np.array(ids)
+
+    # ================ Train the classifier and then Save =======================
+        clf=cv2.face.LBPHFaceRecognizer_create()
+        clf.train(faces, ids)
+        clf.write("classifier.xml")
+        cv2.destroyAllWindows()
+        messagebox.showinfo("Result","Training datasets completed")
 
     def face_data(self):
         self.new_window=Toplevel(self.root)
         self.app=Face_Recognition(self.new_window)
     
+    # open project report function
+    def open_pdf(self):
+        pdf_path = 'Project_Report.pdf'
+        webbrowser.open(pdf_path)
+      
+      
+    
+     
+
 
 
 
