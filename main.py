@@ -1,7 +1,14 @@
 from tkinter import*
 from tkinter import ttk
 from PIL import Image,ImageTk
+import os
 from student import Student
+import tkinter
+from time import strftime
+from datetime import datetime
+from train import Train
+from face_recognition import Face_Recognition
+from attandance import Attendance
 
 class Face_Recognition_system:
     def __init__(self,root):
@@ -31,6 +38,17 @@ class Face_Recognition_system:
         title_label=Label(bg_img,text="FACE RECOGNITION ATTENDANCE SYSTEM", font=("times new roman", 35,"bold"), bg="white",fg="red")
         title_label.place(x=0,y=0,width=1530,height=45)
 
+        #=================Time==========
+        def time():
+            string= strftime('%d-%m-%Y %I:%M:%S %p')
+            
+            label.config(text= string)
+            label.after(1000,time)
+
+        label=Label(title_label, font=('times new roman',14,'bold'),background='white',foreground='blue')
+        label.place(x=0,y=2,width=200,height=50)
+        time()
+
         # Sudent button
         studentButton = Image.open('Images/student_detail.png')
         studentButton = studentButton.resize((220, 220), Image.LANCZOS)
@@ -48,11 +66,11 @@ class Face_Recognition_system:
         faceDetector = faceDetector.resize((220, 220), Image.LANCZOS)
         self.photofaceDetector = ImageTk.PhotoImage(faceDetector)
 
-        b1 = Button(root, image=self.photofaceDetector, cursor="hand2")
+        b1 = Button(root, image=self.photofaceDetector, cursor="hand2", command=self.face_data)
         b1.place(x=400, y=200, width=200, height=200)
   
 
-        b1_label = Button(bg_img, text="Face Detector", cursor="hand2", font=("times new roman", 15, "bold"), bg="blue", fg="white")
+        b1_label = Button(bg_img, text="Face Detector", cursor="hand2", command=self.face_data, font=("times new roman", 15, "bold"), bg="blue", fg="white")
         b1_label.place(x=400, y=270, width=200, height=40)
 
         # Train Data  button
@@ -60,11 +78,11 @@ class Face_Recognition_system:
         trainDataButton = trainDataButton.resize((220, 220), Image.LANCZOS)
         self.phototrainDataButton = ImageTk.PhotoImage(trainDataButton)
 
-        b1 = Button(root, image=self.phototrainDataButton, cursor="hand2")
+        b1 = Button(root, image=self.phototrainDataButton, cursor="hand2", command=self.train_data)
         b1.place(x=700, y=200, width=200, height=200)
   
 
-        b1_label = Button(bg_img, text="Train Data", cursor="hand2", font=("times new roman", 15, "bold"), bg="blue", fg="white")
+        b1_label = Button(bg_img, text="Train Data", cursor="hand2", command=self.train_data, font=("times new roman", 15, "bold"), bg="blue", fg="white")
         b1_label.place(x=700, y=270, width=200, height=40)
 
         # Attendance button
@@ -72,11 +90,11 @@ class Face_Recognition_system:
         attendaceButton = attendaceButton.resize((220, 220), Image.LANCZOS)
         self.photoattendaceButton = ImageTk.PhotoImage(attendaceButton)
 
-        b1 = Button(root, image=self.photoattendaceButton, cursor="hand2")
+        b1 = Button(root, image=self.photoattendaceButton, cursor="hand2",command=self.attendance_data)
         b1.place(x=1000, y=200, width=200, height=200)
   
 
-        b1_label = Button(bg_img, text="Attendance", cursor="hand2", font=("times new roman", 15, "bold"), bg="blue", fg="white")
+        b1_label = Button(bg_img, text="Attendance", cursor="hand2",command=self.attendance_data,font=("times new roman", 15, "bold"), bg="blue", fg="white")
         b1_label.place(x=1000, y=270, width=200, height=40)
 
         # Photos button
@@ -84,11 +102,11 @@ class Face_Recognition_system:
         photoButton = photoButton.resize((220, 220), Image.LANCZOS)
         self.photophotoButton = ImageTk.PhotoImage(photoButton)
 
-        b1 = Button(root, image=self.photophotoButton, cursor="hand2")
+        b1 = Button(root, image=self.photophotoButton, cursor="hand2", command=self.open_img)
         b1.place(x=100, y=450, width=200, height=200)
   
 
-        b1_label = Button(bg_img, text="Photos", cursor="hand2", font=("times new roman", 15, "bold"), bg="blue", fg="white")
+        b1_label = Button(bg_img, text="Photos", cursor="hand2", command=self.open_img, font=("times new roman", 15, "bold"), bg="blue", fg="white")
         b1_label.place(x=100, y=520, width=200, height=40)
 
         # Project Report button
@@ -108,17 +126,45 @@ class Face_Recognition_system:
         exitButton = exitButton.resize((220, 220), Image.LANCZOS)
         self.photoexitButton = ImageTk.PhotoImage(exitButton)
 
-        b1 = Button(root, image=self.photoexitButton, cursor="hand2")
+        b1 = Button(root, image=self.photoexitButton, cursor="hand2",command=self.exit)
         b1.place(x=1000, y=450, width=200, height=200)
   
 
-        b1_label = Button(bg_img, text="Exit", cursor="hand2", font=("times new roman", 15, "bold"), bg="blue", fg="white")
+        b1_label = Button(bg_img, text="Exit", cursor="hand2",command=self.exit, font=("times new roman", 15, "bold"), bg="blue", fg="white")
         b1_label.place(x=1000, y=520, width=200, height=40)
 
-        # Function button
+    #================== Function button=================
+
+    def open_img(self):
+        os.startfile("data")
+
+
+
+    # Function button
     def student_detail(self):
         self.new_window=Toplevel(self.root)
         self.app=Student(self.new_window)
+
+    
+    def exit(self):
+        self.exit=tkinter.messagebox.askyesno("Face Recognition", "Are you sure exit this project",parent=self.root)
+        if self.exit >0:
+           self.root.destroy()
+        else: 
+            return
+    def train_data(self):
+        self.new_window=Toplevel(self.root)
+        self.app=Train(self.new_window)
+
+    def face_data(self):
+        self.new_window=Toplevel(self.root)
+        self.app=Face_Recognition(self.new_window)
+
+    def attendance_data(self):
+        self.new_window=Toplevel(self.root)
+        self.app=Attendance(self.new_window)
+    
+
 
 
 
