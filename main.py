@@ -8,6 +8,7 @@ from time import strftime
 from datetime import datetime
 from train import Train
 from face_recognition import Face_Recognition
+from attandance import Attendance
 
 class Face_Recognition_system:
     def __init__(self,root):
@@ -89,11 +90,11 @@ class Face_Recognition_system:
         attendaceButton = attendaceButton.resize((220, 220), Image.LANCZOS)
         self.photoattendaceButton = ImageTk.PhotoImage(attendaceButton)
 
-        b1 = Button(root, image=self.photoattendaceButton, cursor="hand2")
+        b1 = Button(root, image=self.photoattendaceButton, cursor="hand2",command=self.attendance_data)
         b1.place(x=1000, y=200, width=200, height=200)
   
 
-        b1_label = Button(bg_img, text="Attendance", cursor="hand2", font=("times new roman", 15, "bold"), bg="blue", fg="white")
+        b1_label = Button(bg_img, text="Attendance", cursor="hand2",command=self.attendance_data,font=("times new roman", 15, "bold"), bg="blue", fg="white")
         b1_label.place(x=1000, y=270, width=200, height=40)
 
         # Photos button
@@ -158,7 +159,12 @@ class Face_Recognition_system:
     def face_data(self):
         self.new_window=Toplevel(self.root)
         self.app=Face_Recognition(self.new_window)
+
+    def attendance_data(self):
+        self.new_window=Toplevel(self.root)
+        self.app=Attendance(self.new_window)
     
+
 
 
 
