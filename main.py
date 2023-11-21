@@ -102,7 +102,7 @@ class Face_Recognition_system:
         b1_label.place(x=1000, y=270, width=200, height=40)
 
         # Photos button
-        photoButton = Image.open('Images/photo_button.jpeg')
+        photoButton = Image.open('Images/photo_button.jpg')
         photoButton = photoButton.resize((220, 220), Image.LANCZOS)
         self.photophotoButton = ImageTk.PhotoImage(photoButton)
 
@@ -124,6 +124,19 @@ class Face_Recognition_system:
 
         b1_label = Button(bg_img, text="Project Report",command=self.open_pdf, cursor="hand2", font=("times new roman", 15, "bold"), bg="blue", fg="white")
         b1_label.place(x=400, y=520, width=200, height=40)
+
+        #Result Tool To extract results of student button
+        resultButton = Image.open('Images/results_button.jpeg')
+        resultButton = resultButton.resize((220, 220), Image.LANCZOS)
+        self.photoresultButton = ImageTk.PhotoImage(resultButton)
+
+        b1 = Button(root, image=self.photoresultButton, cursor="hand2")
+        b1.place(x=700, y=450, width=200, height=200)
+  
+
+        b1_label = Button(bg_img, text="Results At Ones", cursor="hand2", font=("times new roman", 15, "bold"), bg="blue", fg="white")
+        b1_label.place(x=700, y=520, width=200, height=40)
+ 
 
         # Exit button
         exitButton = Image.open('Images/exit_button.jpg')
