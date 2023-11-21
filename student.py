@@ -4,6 +4,7 @@ from PIL import Image,ImageTk
 from tkinter import messagebox
 import mysql.connector
 import cv2
+import os
 
 class Student:
     def __init__(self,root):
@@ -425,6 +426,11 @@ class Student:
                 self.fetch_data()
                 self.reset_data()
                 conn.close()
+    
+    # ===========Create Directory/folder to store images
+                def create_directory(directory):
+                      if not os.path.exists(directory):
+                         os.makedirs(directory)
 
     # ==============Load predifined data on face frontals from opencv =======================
                 face_classifier=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
@@ -441,11 +447,15 @@ class Student:
                 img_id=0
                 while True:
                     ret,my_frame=cap.read()
+                    cropped_face = face_cropped(my_frame)
                     if face_cropped(my_frame) is not None:
                         img_id+=1
                         face=cv2.resize(face_cropped(my_frame),(450,450))
                         face=cv2.cvtColor(face,cv2.COLOR_BGR2GRAY)
-                        file_name_path="data/user."+str(id)+"."+str(img_id)+".jpg"
+                        # Assuming 'id' variable exists with student's roll number or name
+                        directory = f"data/{str(id)}"  # Folder name based on student's ID
+                        create_directory(directory)
+                        file_name_path= f"{directory}/user.{str(id)}.{str(img_id)}.jpg"
                         cv2.imwrite(file_name_path,face)
                         cv2.putText(face,str(img_id),(50,50),cv2.FONT_HERSHEY_COMPLEX,2,(0,255,0),2)
                         cv2.imshow("Croped Face",face)
