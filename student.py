@@ -210,22 +210,22 @@ class Student:
         student_search_label=Label(student_search_frame,text="Search Student By :",font=("times new roman",13,"bold") ,bg="green", fg="white")
         student_search_label.grid(row=0,column=0,padx=10,pady=5,sticky=W)
 
-        student_search_combo=ttk.Combobox(student_search_frame,font=("times new roman",12,"bold"), state="readonly")
-        student_search_combo["values"]=("Select","Student Name","Roll No.")
-        student_search_combo.current(0)
-        student_search_combo.grid(row=0,column=1,padx=2,pady=10,sticky=W)
+        self.student_search_combo=ttk.Combobox(student_search_frame,font=("times new roman",12,"bold"), state="readonly")
+        self.student_search_combo["values"]=("Select","Student Name","Roll No.")
+        self.student_search_combo.current(0)
+        self.student_search_combo.grid(row=0,column=1,padx=2,pady=10,sticky=W)
 
-        search_entry=ttk.Entry(student_search_frame,width=20,font=("times new roman", 13,"bold"))
-        search_entry.grid(row=0,column=2,padx=10,pady=5,sticky=W)
+        self.search_entry=ttk.Entry(student_search_frame,width=20,font=("times new roman", 13,"bold"))
+        self.search_entry.grid(row=0,column=2,padx=10,pady=5,sticky=W)
 
         # Student search Button
         student_search_button_frame=Frame(right_frame,bd=2,relief=RIDGE,bg="white")
         student_search_button_frame.place(x=180,y=200,width=280,height=35)
 
-        search_btn=Button(student_search_button_frame,text="Search",width=13,font=("times new roman",13,"bold"),bg="blue",fg="white")
+        search_btn=Button(student_search_button_frame,text="Search",command=self.search_student,width=13,font=("times new roman",13,"bold"),bg="blue",fg="white")
         search_btn.grid(row=0,column=0)
 
-        showAll_btn=Button(student_search_button_frame,text="Show All",width=13,font=("times new roman",13,"bold"),bg="blue",fg="white")
+        showAll_btn=Button(student_search_button_frame,text="Show All",command=self.show_all_students,width=13,font=("times new roman",13,"bold"),bg="blue",fg="white")
         showAll_btn.grid(row=0,column=1,padx=4)
 
         # ================Student Table Frame================
@@ -470,8 +470,36 @@ class Student:
             except Exception as es:
                 messagebox.showerror("Error",f"Due to :{str(es)}",parent=self.root)
 
+    # =============search student function ============
+    def search_student(self):
+        search_by = self.student_search_combo.get()
+        search_term = self.search_entry.get()
 
+        # Clearing the existing table data
+        for row in self.student_table.get_children():
+            self.student_table.delete(row)
 
+        conn = mysql.connector.connect(host="localhost", username="root", password="Rohit@9401", database="face_recognizer")
+        my_cursor = conn.cursor()
+
+        if search_by == "Student Name":
+            my_cursor.execute("SELECT * FROM student WHERE name = %s", (search_term,))
+        elif search_by == "Roll No.":
+            my_cursor.execute("SELECT * FROM student WHERE Roll_No = %s", (search_term,))
+
+        data = my_cursor.fetchall()
+
+        for row in data:
+            self.student_table.insert("", END, values=row)
+
+        conn.close()
+
+    def show_all_students(self):
+        # Clearing the existing table data
+        for row in self.student_table.get_children():
+            self.student_table.delete(row)
+
+        self.fetch_data()  # Fetch and display all students again
                 
 
 if __name__ == "__main__":

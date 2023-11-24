@@ -178,15 +178,23 @@ class Face_Recognition_system:
         faces=[]
         ids=[]
 
-        for image in path:
-            img=Image.open(image).convert('L')      # Gray Scale Conversion
-            imageNp=np.array(img,'uint8')           # uint8 - Use for Database   (Data-type)
-            id=int(os.path.split(image)[1].split('.')[1])
+        for root, dirs, files in os.walk(data_dir):
+           for directory in dirs:
+            if directory.isdigit():  # Check if directory name is a digit (considered as ID)
+                label = int(directory)
+                subject_dir = os.path.join(root, directory)
 
-            faces.append(imageNp)
-            ids.append(id)
-            cv2.imshow("Training",imageNp)
-            cv2.waitKey(1)==13
+                for image in os.listdir(subject_dir):
+                    img_path = os.path.join(subject_dir, image)
+                    img = Image.open(img_path).convert('L')  # Convert to grayscale
+                    imageNp = np.array(img, 'uint8')  # Convert image to numpy array
+
+                    faces.append(imageNp)
+                    ids.append(label)
+
+                    cv2.imshow("Training", imageNp)
+                    cv2.waitKey(1)  # WaitKey inside the loop to display each image
+
         ids=np.array(ids)
 
     # ================ Train the classifier and then Save =======================

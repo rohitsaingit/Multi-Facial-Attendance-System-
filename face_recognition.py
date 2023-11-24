@@ -45,7 +45,7 @@ class Face_Recognition:
         info_label.place(x=190,y=580, width=450,height=40)
     
 
-        # ================ Attendance =======================
+    # ================ Attendance =======================
     def mark_attendance(self,r,n,d):
         with open("data.csv", "r+", newline="\n")as f:
             myDataList=f.readlines()

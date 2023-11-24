@@ -6,6 +6,7 @@ import mysql.connector
 import cv2
 import os
 import csv
+import openpyxl
 from tkinter import filedialog
 
 
@@ -25,17 +26,24 @@ class Attendance:
         self.var_atten_attendance=StringVar()
 
         # Header Section
-        img1 = Image.open('Images/student-management-system.png')
-        img1 = img1.resize((750, 150), Image.LANCZOS)
+        img1 = Image.open('Images/attendance.webp')
+        img1 = img1.resize((400, 150), Image.LANCZOS)
         self.photoimg1=ImageTk.PhotoImage(img1)
         f_1b1=Label(self.root,image=self.photoimg1)
-        f_1b1.place(x=0,y=0,width=750,height=150)
+        f_1b1.place(x=500,y=0,width=400,height=150)
 
         img2 = Image.open('Images/college_3rdgate.jpg')
-        img2 = img2.resize((750, 150), Image.LANCZOS)
+        img2 = img2.resize((500, 150), Image.LANCZOS)
         self.photoimg2=ImageTk.PhotoImage(img2)
         f_1b2=Label(self.root,image=self.photoimg2)
-        f_1b2.place(x=740,y=0,width=750,height=150)
+        f_1b2.place(x=0,y=0,width=500,height=150)
+
+        img3 = Image.open('Images/college_image.jpg')
+        img3 = img3.resize((500, 150), Image.LANCZOS)
+        self.photoimg3=ImageTk.PhotoImage(img3)
+        f_1b2=Label(self.root,image=self.photoimg3)
+        f_1b2.place(x=900,y=0,width=500,height=150)
+
 
 
         #Background Image
@@ -46,7 +54,7 @@ class Attendance:
         bg_img.place(x=0,y=150,width=1530,height=710)
 
          #Title of the Page
-        title_label=Label(bg_img,text="Attendance Management System", font=("times new roman", 35,"bold"), bg="white",fg="blue")
+        title_label=Label(bg_img,text="Attendance Management System", font=("times new roman", 35,"bold"), bg="green",fg="yellow")
         title_label.place(x=0,y=0,width=1530,height=45)
 
         #Make A frame over the Background Image
@@ -130,7 +138,7 @@ class Attendance:
         update_btn.grid(row=0,column=1)
         
         #Update button
-        Delete_btn=Button(btn_frame,text="Update",width=15,font=("times new roman",13,"bold"),bg="blue",fg="white")
+        Delete_btn=Button(btn_frame,text="Update",command=self.update_data,width=15,font=("times new roman",13,"bold"),bg="blue",fg="white")
         Delete_btn.grid(row=0,column=2)
 
         #Reset button
@@ -239,11 +247,55 @@ class Attendance:
         self.var_atten_date.set("")
         self.var_atten_attendance.set("")
     
+    def update_data(self):
+        roll = self.var_atten_roll.get()
+        name = self.var_atten_name.get()
+        dep = self.var_atten_dep.get()
+        time = self.var_atten_time.get()
+        date = self.var_atten_date.get()
+        attendance = self.var_atten_attendance.get()
+
+        if roll == "":
+            messagebox.showerror("Error", "Roll No. is required", parent=self.root)
+        else:
+            filename = 'data.csv'
+            found = False
+            updated_data = []
+
+            with open(filename, 'r', newline='') as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    if row[0] == roll:
+                        found = True
+                        row = [roll, name, dep, time, date, attendance]
+                    updated_data.append(row)
+
+            if not found:
+                messagebox.showerror("Error", f"Roll No. {roll} not found", parent=self.root)
+            else:
+                with open(filename, 'w', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerows(updated_data)
+                messagebox.showinfo("Success", "Attendance details updated successfully", parent=self.root)
+                self.fetch_data_csv()
     
 
-    
+    def fetch_data_csv(self):
+        filename = 'data.csv'
 
+        try:
+            with open(filename, 'r', newline='') as file:
+                reader = csv.reader(file)
+                data = list(reader)
 
+                if len(data) != 0:
+                    self.AttandanceReportTable.delete(*self.AttandanceReportTable.get_children())  # Clear existing data
+                    for row in data:
+                        self.AttandanceReportTable.insert("", END, values=row)
+        except FileNotFoundError:
+            messagebox.showerror("Error", f"File '{filename}' not found", parent=self.root)
+        except Exception as e:
+            messagebox.showerror("Error", f"Error occurred: {str(e)}", parent=self.root)
 
 
 
