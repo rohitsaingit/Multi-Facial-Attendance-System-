@@ -3,10 +3,10 @@ from tkinter import ttk
 from PIL import Image,ImageTk
 from tkinter import messagebox
 import mysql.connector
-from time import strftime
 from datetime import datetime
 import cv2
 import os
+import csv
 import numpy as np
 
 class Face_Recognition:
@@ -14,7 +14,7 @@ class Face_Recognition:
         self.root=root
         self.root.geometry("1530x710+0+0")
         self.root.title("Face Recognition System")
-
+        self.marked_attendance = set()
 
     # ================ Label =======================
         title_label=Label(self.root,text="Face Recognition", font=("times new roman", 35,"bold"), bg="blue",fg="white")
@@ -41,23 +41,33 @@ class Face_Recognition:
         b1_label.place(x=310, y=510, width=200, height=40)
     
     # =============Info=====================
-        info_label=Label(f_1b2, text="***Press Enter ,To Stop The Face Detector***", font=("Arial", 14,"bold"),fg="red")
+        info_label=Label(f_1b2, text="Press Enter ,To Stop The Face Detector!!", font=("Arial", 14,"bold"),fg="red")
         info_label.place(x=190,y=580, width=450,height=40)
     
 
     # ================ Attendance =======================
-    def mark_attendance(self,r,n,d):
-        with open("data.csv", "r+", newline="\n")as f:
-            myDataList=f.readlines()
-            name_list=[]
-            for line in myDataList:
-                entry=line.split((","))
-                name_list.append(entry[0])
-            if((r not in name_list) and (n not in name_list) and (d not in name_list)):
-                now=datetime.now()
-                d1=now.strftime("%d/%m/%Y")
-                dtString=now.strftime("%H:%M:%S")
-                f.writelines(f"\n{r},{n},{d},{dtString},{d1},Present")
+    def mark_attendance(self, r, n, d):
+        # Create 'attendance' directory if it doesn't exist
+        if not os.path.exists('attendance'):
+            os.makedirs('attendance')
+
+        filename = f"attendance/data_{datetime.now().strftime('%d-%m-%Y')}.csv"
+
+        entry = f"{r},{n},{d},{datetime.now().strftime('%H:%M:%S')},{datetime.now().strftime('%d/%m/%Y')},Present"
+
+        # Check if the student ID has already been marked
+        if r not in self.marked_attendance:
+            self.marked_attendance.add(r)
+            # Check if the file exists; if not, add attendance entry
+            if not os.path.exists(filename):
+                with open(filename, "w") as f:
+                    f.write(entry)
+            else:
+                # Check if the entry already exists in today's attendance file
+                with open(filename, "r+") as f:
+                    lines = f.readlines()
+                    if not lines or lines[-1].strip() != entry:
+                        f.write(f"\n{entry}")
 
     # ================ Face Recognition =======================
     def face_recog(self):
@@ -77,15 +87,15 @@ class Face_Recognition:
 
                # n - Name, r - Roll_No, d - Department
 
-                my_cursor.execute("select Roll_No from student where Roll_No="+str(id))
+                my_cursor.execute("select Roll_No from student where Reg_No="+str(id))
                 r=my_cursor.fetchone()
                 r="+".join(r)
 
-                my_cursor.execute("select Name from student where Roll_No="+str(id))
+                my_cursor.execute("select Name from student where Reg_No="+str(id))
                 n=my_cursor.fetchone()
                 n="+".join(n)
 
-                my_cursor.execute("select Dep from student where Roll_No="+str(id))
+                my_cursor.execute("select Dep from student where Reg_No="+str(id))
                 d=my_cursor.fetchone()
                 d="+".join(d)
 

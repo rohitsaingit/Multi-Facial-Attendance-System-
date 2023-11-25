@@ -6,6 +6,7 @@ import mysql.connector
 import cv2
 import os
 import csv
+import pandas as pd
 import openpyxl
 from tkinter import filedialog
 
@@ -246,7 +247,8 @@ class Attendance:
         self.var_atten_time.set("")
         self.var_atten_date.set("")
         self.var_atten_attendance.set("")
-    
+
+    # ===========update button===========
     def update_data(self):
         roll = self.var_atten_roll.get()
         name = self.var_atten_name.get()
@@ -256,46 +258,52 @@ class Attendance:
         attendance = self.var_atten_attendance.get()
 
         if roll == "":
-            messagebox.showerror("Error", "Roll No. is required", parent=self.root)
+           messagebox.showerror("Error", "Roll No. is required", parent=self.root)
         else:
-            filename = 'data.csv'
-            found = False
-            updated_data = []
+           directory = 'attendance'
+           formatted_date = date.replace('/', '-')  # Convert date format to match the file naming convention
+           filename = f'{directory}/data_{formatted_date}.csv'
 
-            with open(filename, 'r', newline='') as file:
-                reader = csv.reader(file)
-                for row in reader:
-                    if row[0] == roll:
-                        found = True
-                        row = [roll, name, dep, time, date, attendance]
-                    updated_data.append(row)
+           if os.path.exists(filename):
+              df = pd.read_csv(filename)
+              mask = df.apply(lambda row: int(row.iloc[0]) == int(roll), axis=1)  # Assuming the first column contains roll numbers
+              if mask.any():
+                  df.loc[mask] = [int(roll), name, dep, time, date, attendance]
+                  df.to_csv(filename, index=False)
+                  messagebox.showinfo("Success", "Attendance details updated successfully", parent=self.root)
+                  self.fetch_data_csv(filename)  # Pass the filename to update the table
+              else:
+                  messagebox.showerror("Error", f"Roll No. {roll} not found", parent=self.root)
+           else:
+               messagebox.showerror("Error", f"File for Date {date} not found", parent=self.root)
 
-            if not found:
-                messagebox.showerror("Error", f"Roll No. {roll} not found", parent=self.root)
-            else:
-                with open(filename, 'w', newline='') as file:
-                    writer = csv.writer(file)
-                    writer.writerows(updated_data)
-                messagebox.showinfo("Success", "Attendance details updated successfully", parent=self.root)
-                self.fetch_data_csv()
-    
-
-    def fetch_data_csv(self):
-        filename = 'data.csv'
-
+    def fetch_data_csv(self, filename):
         try:
-            with open(filename, 'r', newline='') as file:
-                reader = csv.reader(file)
-                data = list(reader)
+           if os.path.exists(filename):
+               df = pd.read_csv(filename)
+               updated = False
+               for index, row in df.iterrows():
+                   values = list(row)
+                   existing_rows = self.AttandanceReportTable.get_children()
+                   existing_roll_numbers = [self.AttandanceReportTable.item(row)["values"][0] for row in existing_rows]
+                   if values[0] in existing_roll_numbers:
+                      item_index = existing_roll_numbers.index(values[0])
+                      self.AttandanceReportTable.item(existing_rows[item_index], values=values)
+                      updated = True
+                   else:
+                      self.AttandanceReportTable.insert("", END, values=values)
+                      updated = True
 
-                if len(data) != 0:
-                    self.AttandanceReportTable.delete(*self.AttandanceReportTable.get_children())  # Clear existing data
-                    for row in data:
-                        self.AttandanceReportTable.insert("", END, values=row)
-        except FileNotFoundError:
-            messagebox.showerror("Error", f"File '{filename}' not found", parent=self.root)
+               if not updated:
+                   self.AttandanceReportTable.delete(*self.AttandanceReportTable.get_children())  # Clear existing data
+                   for index, row in df.iterrows():
+                      values = list(row)
+                      self.AttandanceReportTable.insert("", END, values=values)
+
+           else:
+               messagebox.showerror("Error", f"File '{filename}' not found", parent=self.root)
         except Exception as e:
-            messagebox.showerror("Error", f"Error occurred: {str(e)}", parent=self.root)
+               messagebox.showerror("Error", f"Error occurred: {str(e)}", parent=self.root)
 
 
 
