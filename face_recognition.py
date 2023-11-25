@@ -41,7 +41,7 @@ class Face_Recognition:
         b1_label.place(x=310, y=510, width=200, height=40)
     
     # =============Info=====================
-        info_label=Label(f_1b2, text="***Press Enter ,To Stop The Face Detector***", font=("Arial", 14,"bold"),fg="red")
+        info_label=Label(f_1b2, text="Press Enter ,To Stop The Face Detector!!", font=("Arial", 14,"bold"),fg="red")
         info_label.place(x=190,y=580, width=450,height=40)
     
 
@@ -72,20 +72,20 @@ class Face_Recognition:
                 id,predict=clf.predict(gray_image[y:y+h,x:x+w])
                 confidence=int((100*(1-predict/300)))
 
-                conn = mysql.connector.connect(host="localhost",username="root",password="Rohit@9401",database="face_recognizer")
+                conn = mysql.connector.connect(host="localhost",username="root",password="9896066470King@",database="face_recognizer")
                 my_cursor = conn.cursor()
 
                # n - Name, r - Roll_No, d - Department
 
-                my_cursor.execute("select Roll_No from student where Roll_No="+str(id))
+                my_cursor.execute("select Roll_No from student where Reg_No="+str(id))
                 r=my_cursor.fetchone()
                 r="+".join(r)
 
-                my_cursor.execute("select Name from student where Roll_No="+str(id))
+                my_cursor.execute("select Name from student where Reg_No="+str(id))
                 n=my_cursor.fetchone()
                 n="+".join(n)
 
-                my_cursor.execute("select Dep from student where Roll_No="+str(id))
+                my_cursor.execute("select Dep from student where Reg_No="+str(id))
                 d=my_cursor.fetchone()
                 d="+".join(d)
 

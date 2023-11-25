@@ -2,11 +2,8 @@ from tkinter import*
 from tkinter import ttk
 from PIL import Image,ImageTk
 from tkinter import messagebox
-import mysql.connector
-import cv2
 import os
 import csv
-import openpyxl
 from tkinter import filedialog
 
 
@@ -86,7 +83,7 @@ class Attendance:
 
         
         #Name
-        nameLabel=Label(left_inside_frame,text="Name ",font=("times new roman",12,"bold"))
+        nameLabel=Label(left_inside_frame,text="Name :",font=("times new roman",12,"bold"))
         nameLabel.grid(row=0,column=3)
 
         studentName_entry=ttk.Entry(left_inside_frame,width=16, textvariable=self.var_atten_name,font=("times new roman", 13,"bold"))
@@ -94,14 +91,14 @@ class Attendance:
 
                 
         #Department
-        deplabel=Label(left_inside_frame,text="Department",font=("times new roman",12,"bold"))
+        deplabel=Label(left_inside_frame,text="Department :",font=("times new roman",12,"bold"))
         deplabel.grid(row=1,column=0)
 
         atten_dep=ttk.Entry(left_inside_frame,width=16, textvariable=self.var_atten_dep,font=("times new roman", 13,"bold"))
         atten_dep.grid(row=1,column=1,pady=10,)
 
         #Time
-        timelabel=Label(left_inside_frame,text="Time:",font=("times new roman",12,"bold"))
+        timelabel=Label(left_inside_frame,text="Time :",font=("times new roman",12,"bold"))
         timelabel.grid(row=1,column=3)
 
         atten_time=ttk.Entry(left_inside_frame,width=16, textvariable=self.var_atten_time,font=("times new roman", 13,"bold"))
@@ -109,14 +106,14 @@ class Attendance:
 
         
         #date
-        datelabel=Label(left_inside_frame,text="Date:",font=("times new roman",12,"bold"))
+        datelabel=Label(left_inside_frame,text="Date :",font=("times new roman",12,"bold"))
         datelabel.grid(row=2,column=0)
 
         atten_date=ttk.Entry(left_inside_frame,width=16, textvariable=self.var_atten_date,font=("times new roman", 13,"bold"))
         atten_date.grid(row=2,column=1,pady=10,)
 
         #attandance
-        attandancelabel=Label(left_inside_frame,text="Attendance Status",bg="white",font=("times new roman",12,"bold"))
+        attandancelabel=Label(left_inside_frame,text="Attendance :",bg="white",font=("times new roman",12,"bold"))
         attandancelabel.grid(row=2,column=3)
 
         self.atten_status=ttk.Combobox(left_inside_frame, width=16, textvariable=self.var_atten_attendance,font=("times new roman",12,"bold"), state="readonly")
@@ -168,7 +165,7 @@ class Attendance:
 
         scroll_x.config(command=self.AttandanceReportTable.xview)
         scroll_y.config(command=self.AttandanceReportTable.yview)
-        self.AttandanceReportTable.heading("roll", text="Roll")
+        self.AttandanceReportTable.heading("roll", text="Roll No.")
         self.AttandanceReportTable.heading("name",text="Name")
         self.AttandanceReportTable.heading("department",text="Department")
         self.AttandanceReportTable.heading("time", text="Time")
