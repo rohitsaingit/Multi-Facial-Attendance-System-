@@ -16,9 +16,6 @@ class Student:
         self.var_regno=StringVar()
         self.var_std_name=StringVar()
         self.var_rollno=StringVar()
-        self.var_regno=StringVar()
-        self.var_std_name=StringVar()
-        self.var_rollno=StringVar()
         self.var_dep=StringVar()
         self.var_course=StringVar()
         self.var_semester=StringVar()
@@ -26,7 +23,6 @@ class Student:
         self.var_gender=StringVar()
         self.var_session=StringVar()
         self.var_teacher=StringVar()
-        
         
 
         # Header Section
@@ -84,7 +80,6 @@ class Student:
 
         dep_combo=ttk.Combobox(current_course_frame,textvariable=self.var_dep,font=("times new roman",12,"bold"), state="readonly")
         dep_combo["values"]=("Select Department","ECE","CSE","ME","BT","ECO","AI/ML")
-        dep_combo["values"]=("Select Department","ECE","CSE","ME","BT","ECO","AI/ML")
         dep_combo.current(0)
         dep_combo.grid(row=0,column=1,padx=2,pady=10,sticky=W)
 
@@ -93,7 +88,6 @@ class Student:
         course_label.grid(row=0,column=2,padx=10,sticky=W)
 
         course_combo=ttk.Combobox(current_course_frame,textvariable=self.var_course,font=("times new roman",12,"bold"), state="readonly")
-        course_combo["values"]=("Select Course","Biomedical","DIP","Matlab","Labs","Other")
         course_combo["values"]=("Select Course","Biomedical","DIP","Matlab","Labs","Other")
         course_combo.current(0)
         course_combo.grid(row=0,column=3,padx=2,pady=10,sticky=W)
@@ -128,49 +122,30 @@ class Student:
         regno_entry.grid(row=0,column=1,padx=10,pady=5,sticky=W)
 
 
-        #Registration Number
-        regno_label=Label(class_stu_frame,text="Reg No. :",font=("times new roman",12,"bold") ,bg="white")
-        regno_label.grid(row=0,column=0,padx=10,sticky=W)
-
-        regno_entry=ttk.Entry(class_stu_frame,textvariable=self.var_regno,width=20,font=("times new roman",12,"bold"))
-        regno_entry.grid(row=0,column=1,padx=10,pady=5,sticky=W)
-
         #Student Name
         studentName_label=Label(class_stu_frame,text="Student Name :",font=("times new roman",12,"bold") ,bg="white")
         studentName_label.grid(row=0,column=2,padx=10,sticky=W)
-        studentName_label.grid(row=0,column=2,padx=10,sticky=W)
 
-        studentName_entry=ttk.Entry(class_stu_frame,textvariable=self.var_std_name,width=20,font=("times new roman", 12,"bold"))
-        studentName_entry.grid(row=0,column=3,padx=10,pady=5,sticky=W)
         studentName_entry=ttk.Entry(class_stu_frame,textvariable=self.var_std_name,width=20,font=("times new roman", 12,"bold"))
         studentName_entry.grid(row=0,column=3,padx=10,pady=5,sticky=W)
         
         #Roll Number
         rollno_label=Label(class_stu_frame,text="Roll No. :",font=("times new roman",12,"bold") ,bg="white")
         rollno_label.grid(row=1,column=0,padx=10,sticky=W)
-        rollno_label=Label(class_stu_frame,text="Roll No. :",font=("times new roman",12,"bold") ,bg="white")
-        rollno_label.grid(row=1,column=0,padx=10,sticky=W)
 
-        rollno_entry=ttk.Entry(class_stu_frame,textvariable=self.var_rollno,width=20,font=("times new roman", 12,"bold"))
-        rollno_entry.grid(row=1,column=1,padx=10,pady=5,sticky=W)
         rollno_entry=ttk.Entry(class_stu_frame,textvariable=self.var_rollno,width=20,font=("times new roman", 12,"bold"))
         rollno_entry.grid(row=1,column=1,padx=10,pady=5,sticky=W)
 
         #Gender
         gender_label=Label(class_stu_frame,text="Gender :",font=("times new roman",12,"bold") ,bg="white")
         gender_label.grid(row=1,column=2,padx=10,sticky=W)
-        gender_label.grid(row=1,column=2,padx=10,sticky=W)
 
-        gender_combo=ttk.Combobox(class_stu_frame,textvariable=self.var_gender,font=("times new roman",10,"bold"), state="readonly")
         gender_combo=ttk.Combobox(class_stu_frame,textvariable=self.var_gender,font=("times new roman",10,"bold"), state="readonly")
         gender_combo["values"]=("Male","Female","Other")
         gender_combo.current(0)
         gender_combo.grid(row=1,column=3,padx=10,pady=5,sticky=W)
-        gender_combo.grid(row=1,column=3,padx=10,pady=5,sticky=W)
 
         #Phone Number
-        phoneNumber_label=Label(class_stu_frame,text="Phone No. :",font=("times new roman",12,"bold") ,bg="white")
-        phoneNumber_label.grid(row=2,column=0,padx=10,sticky=W)
         phoneNumber_label=Label(class_stu_frame,text="Phone No. :",font=("times new roman",12,"bold") ,bg="white")
         phoneNumber_label.grid(row=2,column=0,padx=10,sticky=W)
 
@@ -185,14 +160,11 @@ class Student:
         # section_combo["values"]=("A","B")
         # section_combo.current(0)
         # section_combo.grid(row=2,column=1,padx=10,pady=5,sticky=W)
-        phoneNumber_entry=ttk.Entry(class_stu_frame,textvariable=self.var_mobile,width=20,font=("times new roman", 12,"bold"))
-        phoneNumber_entry.grid(row=2,column=1,padx=10,pady=5,sticky=W)
 
         #Teacher
         teacher_label=Label(class_stu_frame,text="Teacher Name :",font=("times new roman",12,"bold") ,bg="white")
         teacher_label.grid(row=2,column=2,padx=10,sticky=W)
 
-        teacher_entry=ttk.Entry(class_stu_frame,textvariable=self.var_teacher,width=20,font=("times new roman", 12,"bold"))
         teacher_entry=ttk.Entry(class_stu_frame,textvariable=self.var_teacher,width=20,font=("times new roman", 12,"bold"))
         teacher_entry.grid(row=2,column=3,padx=10,pady=5,sticky=W)
         
@@ -258,7 +230,6 @@ class Student:
         # Student search Button
         student_search_button_frame=Frame(right_frame,bd=2,relief=RIDGE,bg="white")
         student_search_button_frame.place(x=80,y=200,width=280,height=35)
-        student_search_button_frame.place(x=80,y=200,width=280,height=35)
 
         search_btn=Button(student_search_button_frame,text="Search",command=self.search_student,width=13,font=("times new roman",13,"bold"),bg="blue",fg="white")
         search_btn.grid(row=0,column=0)
@@ -273,13 +244,6 @@ class Student:
         deleteAll_btn=Button(student_deleteAll_button_frame,text="Delete All",command=self.delete_all, width=13,font=("times new roman",13,"bold"),bg="blue",fg="white")
         deleteAll_btn.grid(row=0,column=2)
 
-        # Delete All
-        student_deleteAll_button_frame=Frame(right_frame,bd=2,relief=RIDGE,bg="white")
-        student_deleteAll_button_frame.place(x=363,y=200,width=280,height=35)
-
-        deleteAll_btn=Button(student_deleteAll_button_frame,text="Delete All",command=self.delete_all,width=13,font=("times new roman",13,"bold"),bg="blue",fg="white")
-        deleteAll_btn.grid(row=0,column=2)
-
         # ================Student Table Frame================
         student_table_frame=LabelFrame(right_frame,bd=2,bg="white", relief=RIDGE)
         student_table_frame.place(x=10,y=240,width=595,height=240)
@@ -288,8 +252,6 @@ class Student:
         scroll_y=ttk.Scrollbar(student_table_frame,orient=VERTICAL)
 
         self.student_table=ttk.Treeview(student_table_frame, columns=("regno","name","rollno","dep","sem","session","mobile","gender","course","teacher"),xscrollcommand=scroll_x.set,yscrollcommand=scroll_y.set)
-        self.student_table=ttk.Treeview(student_table_frame, columns=("regno","name","rollno","dep","sem","session","mobile","gender","course","teacher"),xscrollcommand=scroll_x.set,yscrollcommand=scroll_y.set)
-
         scroll_x.pack(side=BOTTOM,fill=X)
         scroll_y.pack(side=RIGHT,fill=Y)
         scroll_x.config(command=self.student_table.xview)
@@ -297,22 +259,17 @@ class Student:
 
 
         self.student_table.heading("regno", text="Registration No")
-        self.student_table.heading("regno", text="Registration No")
         self.student_table.heading("name", text="Student Name")
-        self.student_table.heading("rollno", text="Roll No")
         self.student_table.heading("rollno", text="Roll No")
         self.student_table.heading("dep", text="Department")
         self.student_table.heading("sem", text="Semester")
         self.student_table.heading("session", text="Session")
-        self.student_table.heading("mobile", text="Phone No")
         self.student_table.heading("mobile", text="Phone No")
         self.student_table.heading("gender", text="Gender")
         self.student_table.heading("course", text="Course")
         self.student_table.heading("teacher", text="Teacher")
 
         self.student_table["show"]="headings"
-        self.student_table.column("regno",width=100)
-        self.student_table.column("name",width=100)
         self.student_table.column("regno",width=100)
         self.student_table.column("name",width=100)
         self.student_table.column("rollno",width=100)
@@ -338,9 +295,7 @@ class Student:
                 my_cursor = conn.cursor()
                 my_cursor.execute("insert into student values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
                     self.var_regno.get(),
-                    self.var_regno.get(),
                     self.var_std_name.get(),
-                    self.var_rollno.get(),
                     self.var_rollno.get(),
                     self.var_dep.get(),
                     self.var_semester.get(),
@@ -378,11 +333,7 @@ class Student:
         data=content["values"]
 
         self.var_regno.set(data[0]),
-        self.var_regno.set(data[0]),
         self.var_std_name.set(data[1]),
-        self.var_rollno.set(data[2]),
-        self.var_dep.set(data[3]),
-        self.var_semester.set(data[4]),
         self.var_rollno.set(data[2]),
         self.var_dep.set(data[3]),
         self.var_semester.set(data[4]),
@@ -403,9 +354,7 @@ class Student:
                     conn = mysql.connector.connect(host="localhost",username="root",password="Rohit@9401",database="face_recognizer")
                     my_cursor = conn.cursor()
                     my_cursor.execute("update student set Name=%s,Roll_No=%s,Dep=%s,Sem=%s,Session=%s,Mobile=%s,Gender=%s,Course=%s,Teacher=%s where Reg_No=%s",(
-                    my_cursor.execute("update student set Name=%s,Roll_No=%s,Dep=%s,Sem=%s,Sec=%s,Session=%s,Mobile=%s,Gender=%s,Course=%s,Teacher=%s where Reg_No=%s",(
                         self.var_std_name.get(),
-                        self.var_rollno.get(),
                         self.var_rollno.get(),
                         self.var_dep.get(),
                         self.var_semester.get(),
@@ -415,8 +364,6 @@ class Student:
                         self.var_course.get(),
                         self.var_teacher.get(),
                         self.var_regno.get()
-                        self.var_regno.get()
-                        
                     ))
                 else:
                     if not Update:
@@ -433,16 +380,12 @@ class Student:
     def delete_data(self):
         if self.var_regno.get()=="":
             messagebox.showerror("Error","Student Registration number must be required",parent=self.root)
-        if self.var_regno.get()=="":
-            messagebox.showerror("Error","Student Registration number must be required",parent=self.root)
         else:
             try:
                 delete=messagebox.askyesno("Student Delete Page","Do you want to delete this student ?",parent=self.root)
                 if delete>0:
                     conn = mysql.connector.connect(host="localhost",username="root",password="Rohit@9401",database="face_recognizer")
                     my_cursor = conn.cursor()
-                    sql="delete from student where Reg_No=%s"
-                    val=(self.var_regno.get(),)
                     sql="delete from student where Reg_No=%s"
                     val=(self.var_regno.get(),)
                     my_cursor.execute(sql,val)
@@ -462,7 +405,6 @@ class Student:
         self.var_std_name.set("")
         self.var_dep.set("Select Department")
         self.var_semester.set("Select Semester")
-        self.var_regno.set("")
         self.var_regno.set("")
         self.var_session.set("Select Session")
         self.var_mobile.set("")
@@ -484,9 +426,7 @@ class Student:
                 for x in myresult:
                     id+=1
                     my_cursor.execute("update student set Name=%s,Roll_No=%s,Dep=%s,Sem=%s,Session=%s,Mobile=%s,Gender=%s,Course=%s,Teacher=%s where Reg_No=%s",(
-                my_cursor.execute("update student set Name=%s,Roll_No=%s,Dep=%s,Sem=%s,Session=%s,Mobile=%s,Gender=%s,Course=%s,Teacher=%s where Reg_No=%s",(
                         self.var_std_name.get(),
-                        self.var_rollno.get(),
                         self.var_rollno.get(),
                         self.var_dep.get(),
                         self.var_semester.get(),
@@ -495,7 +435,6 @@ class Student:
                         self.var_gender.get(),
                         self.var_course.get(),
                         self.var_teacher.get(),
-                        self.var_regno.get()==id+1
                         self.var_regno.get()==id+1
                     ))
                 conn.commit()
@@ -571,8 +510,6 @@ class Student:
         conn.close()
     
     # =====Show All==========
-
-    # ================Show All================
     def show_all_students(self):
         # Clearing the existing table data
         for row in self.student_table.get_children():
@@ -596,26 +533,6 @@ class Student:
         except Exception as es:
             messagebox.showerror("Error", f"Due to: {str(es)}", parent=self.root)
    
-            
-    # ================Delete Function================
-    def delete_all(self):
-        try:
-            delete=messagebox.askyesno("Student Delete Page","Do you want to delete all the students ?",parent=self.root)
-            if delete>0:
-                conn = mysql.connector.connect(host="localhost",username="root",password="9896066470King@",database="face_recognizer")
-                my_cursor = conn.cursor()
-                sql="Truncate table student"
-                val=(self.var_regno.get(),)
-                my_cursor.execute(sql,val)
-            else:
-                if not delete:
-                    return
-            conn.commit()
-            self.fetch_data()
-            conn.close()
-            messagebox.showinfo("Delete","Successfully deleted students details",parent=self.root)
-        except Exception as es:
-            messagebox.showerror("Error",f"Due to :{str(es)}",parent=self.root)
 
 if __name__ == "__main__":
     root=Tk()
