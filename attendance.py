@@ -216,17 +216,32 @@ class Attendance:
  #     export csv
     def exportCsv(self):
         try:
-            if len(mydata)<1:
-                messagebox.showerror(" No Data", "No Data found to export", parent=self.root)
-                return False
-            fln=filedialog.asksaveasfilename(initialdir=os.getcwd(),title="Open CSV", filetypes=(("CSV File","*.csv"),("AL1 File","*.*")),parent=self.root)
-            with open(fln,mode="w",newline="") as myfile:
-                exp_write=csv.writer(myfile,delimiter=",")
-                for i in mydata:
-                    exp_write.writerow(i)
-                messagebox.showinfo("Data export"," Your data exported to"+os.path.basename(fln)+"Successfully")
+            records = []
+            for row_id in self.AttandanceReportTable.get_children():
+               records.append(self.AttandanceReportTable.item(row_id)['values'])
+
+            if len(records) < 1:
+               messagebox.showerror("No Data", "No Data found to export", parent=self.root)
+               return False
+            
+            fln = filedialog.asksaveasfilename(
+               initialdir=os.getcwd(),
+               title="Save CSV",
+               filetypes=(("CSV File", "*.csv"), ("All Files", "*.*")),
+               parent=self.root,
+               defaultextension=".csv",
+             )
+            if fln:
+                with open(fln, mode="w", newline="") as myfile:
+                   exp_write = csv.writer(myfile, delimiter=",")
+                   exp_write.writerow(["Roll", "Name", "Department", "Time", "Date", "Attendance"])
+                   for record in records:
+                    exp_write.writerow(record)
+
+
+            messagebox.showinfo("Data export", f"Your data exported to {fln} Successfully")
         except Exception as es:
-            messagebox.showerror("Error", f"Due to:{str(es)}", parent=self.root)
+            messagebox.showerror("Error", f"Due to: {str(es)}", parent=self.root)
 
  
     def get_cursor(self,event=""):
